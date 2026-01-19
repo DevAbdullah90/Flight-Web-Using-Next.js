@@ -49,12 +49,12 @@ export function FlightSearchForm({ onSearch, isLoading }: FlightSearchFormProps)
             </datalist>
 
             {/* Tabs */}
-            <div className="flex justify-center mb-0">
-                <div className="bg-white rounded-t-xl shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] px-6 py-3 flex gap-8 items-center">
+            <div className="flex justify-center mb-0 w-full">
+                <div className="w-full md:w-auto bg-white rounded-t-xl shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] px-4 md:px-6 py-3 flex gap-4 md:gap-8 items-center overflow-x-auto scrollbar-hide mask-fade-sides">
                     <button
                         type="button"
                         onClick={() => setActiveTab("flight")}
-                        className={cn("flex items-center gap-2 text-sm font-semibold transition-colors pb-1 border-b-2", activeTab === "flight" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
+                        className={cn("flex items-center gap-2 text-sm font-semibold transition-colors pb-1 border-b-2 whitespace-nowrap shrink-0", activeTab === "flight" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
                     >
                         <Plane className="w-4 h-4" />
                         Book a flight
@@ -62,7 +62,7 @@ export function FlightSearchForm({ onSearch, isLoading }: FlightSearchFormProps)
                     <button
                         type="button"
                         onClick={() => setActiveTab("visa")}
-                        className={cn("flex items-center gap-2 text-sm font-medium transition-colors pb-1 border-b-2", activeTab === "visa" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
+                        className={cn("flex items-center gap-2 text-sm font-medium transition-colors pb-1 border-b-2 whitespace-nowrap shrink-0", activeTab === "visa" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
                     >
                         <Globe className="w-4 h-4" />
                         Visa
@@ -70,7 +70,7 @@ export function FlightSearchForm({ onSearch, isLoading }: FlightSearchFormProps)
                     <button
                         type="button"
                         onClick={() => setActiveTab("hotel")}
-                        className={cn("flex items-center gap-2 text-sm font-medium transition-colors pb-1 border-b-2", activeTab === "hotel" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
+                        className={cn("flex items-center gap-2 text-sm font-medium transition-colors pb-1 border-b-2 whitespace-nowrap shrink-0", activeTab === "hotel" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
                     >
                         <Building className="w-4 h-4" />
                         Hotel
@@ -78,7 +78,7 @@ export function FlightSearchForm({ onSearch, isLoading }: FlightSearchFormProps)
                     <button
                         type="button"
                         onClick={() => setActiveTab("package")}
-                        className={cn("flex items-center gap-2 text-sm font-medium transition-colors pb-1 border-b-2", activeTab === "package" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
+                        className={cn("flex items-center gap-2 text-sm font-medium transition-colors pb-1 border-b-2 whitespace-nowrap shrink-0", activeTab === "package" ? "text-flight-primary border-flight-primary" : "text-gray-500 border-transparent hover:text-gray-700")}
                     >
                         <Briefcase className="w-4 h-4" />
                         Holiday Package
@@ -128,6 +128,9 @@ export function FlightSearchForm({ onSearch, isLoading }: FlightSearchFormProps)
                                 {getAirport(destination)?.name || "Select Airport"}
                             </p>
                         </div>
+
+                        {/* Swap Button - Responsive */}
+                        {/* Desktop: Standard left positioning */}
                         <div className="absolute top-1/2 -left-3 -translate-y-1/2 z-10 hidden md:flex">
                             <button type="button" onClick={() => {
                                 const temp = origin;
@@ -135,6 +138,16 @@ export function FlightSearchForm({ onSearch, isLoading }: FlightSearchFormProps)
                                 setDestination(temp);
                             }} className="bg-white rounded-full p-1 border border-slate-200 shadow-sm text-flight-primary hover:bg-slate-50 transition-colors cursor-pointer">
                                 <ArrowRightLeft className="w-3 h-3" />
+                            </button>
+                        </div>
+                        {/* Mobile: Floating centered button between fields (using negative margins or absolute ops) */}
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 md:hidden">
+                            <button type="button" onClick={() => {
+                                const temp = origin;
+                                setOrigin(destination);
+                                setDestination(temp);
+                            }} className="bg-white rounded-full p-1.5 border border-slate-200 shadow-sm text-flight-primary hover:bg-slate-50 transition-colors cursor-pointer">
+                                <ArrowRightLeft className="w-4 h-4 rotate-90" />
                             </button>
                         </div>
                     </div>

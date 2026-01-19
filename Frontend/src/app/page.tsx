@@ -42,7 +42,7 @@ export default function Home() {
       {/* Hero Section with Search Form */}
       <HeroSection onSearch={handleSearch} isLoading={isLoading} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 sm:-mt-10 relative z-30">
 
         {/* Error Alert */}
         {error && (
