@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Flight Web MVP API
+  version: 1.0.0
+paths:
+  /api/search:
+    get:
+      summary: Search for flights
+      parameters:
+        - name: origin
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^[A-Z]{3}$'
+            description: 3-letter IATA code
+        - name: destination
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^[A-Z]{3}$'
+            description: 3-letter IATA code
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+            description: Travel date (YYYY-MM-DD)
+      responses:
+        '200':
+          description: List of flight offers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FlightOffer'
+        '400':
+          description: Validation error
+components:
+  schemas:
+    FlightOffer:
+      type: object
+      properties:
+        id:
+          type: string
+        price:
+          type: object
+          properties:
+            total:
+              type: string
+            currency:
+              type: string
+        itineraries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Itinerary'
+    Itinerary:
+      type: object
+      properties:
+        duration:
+          type: string
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Segment'
+    Segment:
+      type: object
+      properties:
+        departure:
+          $ref: '#/components/schemas/FlightEndpoint'
+        arrival:
+          $ref: '#/components/schemas/FlightEndpoint'
+        carrierCode:
+          type: string
+        number:
+          type: string
+    FlightEndpoint:
+      type: object
+      properties:
+        iataCode:
+          type: string
+        at:
+          type: string
+          format: date-time

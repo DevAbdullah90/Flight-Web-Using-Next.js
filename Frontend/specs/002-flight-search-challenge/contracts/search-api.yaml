@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: Next.js Search Proxy API
+  version: 1.0.0
+paths:
+  /api/search:
+    get:
+      summary: Proxy request to Amadeus Flight Offers Search
+      parameters:
+        - name: origin
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^[A-Z]{3}$'
+        - name: destination
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^[A-Z]{3}$'
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: passengers
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Normalized Flight Data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flight'
+components:
+  schemas:
+    Flight:
+      type: object
+      properties:
+        id:
+          type: string
+        airline:
+          type: string
+        price:
+          type: number
+        duration:
+          type: string
+        departureAt:
+          type: string
+        arrivalAt:
+          type: string
+        stops:
+          type: integer
